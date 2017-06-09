@@ -1,13 +1,16 @@
 package br.com.caelum.ingresso.model;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.springframework.data.annotation.Id;
 
+@Entity
 public class Sessao {
 
 	@Id
@@ -20,6 +23,8 @@ public class Sessao {
 
 	@ManyToOne
 	private Filme filme;
+	
+	private BigDecimal preco;
 
 	public Sessao() {
 	}
@@ -28,6 +33,15 @@ public class Sessao {
 		this.horario = horario;
 		this.setFilme(filme);
 		this.sala = sala;
+		this.preco = sala.getPreco().add(filme.getPreco());
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
 
 	public Sala getSala() {
